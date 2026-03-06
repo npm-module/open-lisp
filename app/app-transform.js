@@ -5,10 +5,11 @@ var lispCode = `
 (console.log 123)
 #|@
 var xyz = "XYZ";
-console.log(<string>xyz={{xyz}}<string>)
+console.log(<string>xyz={{xyz}}<string>);
+console.log($system.cwd());
 |#
+(defun add3 (a b c) (+ a b c))
 `;
 var jsCode = await async_transformCode(lispCode);
-//console.log(jsCode);
 system.saveText("transformed.js", jsCode);
 await system.async_run(["cat", "./transformed.js"]);
