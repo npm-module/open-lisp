@@ -1,0 +1,75 @@
+#! /usr/bin/env -S deno -A
+import { async_transformCode, system } from "../npm-module/esm/mod.js";
+
+var lispCode = `
+#|@
+console.log("XXX");
+console.log($system.cwd());
+|#
+
+;;(throw 777)
+(console.log $@answerA={{11+22}}@)
+(console.log ("$@" "answerB={{110+220}}"))
+(console.log $@
+answer1={{110+220}}
+answer2={{330+440}}
+@)
+(console.log "abc
+def")
+(console.log {
+  "abc" "xyz"
+  "bbb" (11 undefined "ハロー©")
+})
+(console.log #|@ 111+222 |#)
+(console.log ("@" "777+888"))
+(console.log #|@ 1111+2222 |#)
+(console.log @
+1111
++
+2222
+@)
+(console.log "str")
+(console.log "ハロー©")
+(define xyz 777)
+(console.log $scope.xyz)
+(console.log 123)
+(console.log (+ 11 22]
+
+(define x 123)
+(begin
+  (set! $scope.x (+ 1 $scope.x))
+  (set! $scope.x (+ 2 $scope.x))
+  (console.log $scope.x]
+
+;;(Deno.exit 0)
+[dotimes (i 3) (console.log i]
+[dotimes (i 3) (dotimes (j 2) (console.log (list i j]
+(define x 11)
+(define y 22)
+(console.log (+ $scope.x $scope.y]
+[let ((a 33) (b 44)) (console.log (+ a b]
+[let* ((a 55) (b (+ 1 a))) (console.log a b]
+[let* [(a 55) (b (+ 1 a] (console.log a b]
+(define (fact n)
+  (let ((factorial 1.0))
+    (if (< n 0)
+        -1
+      (begin
+        [dotimes (i n)
+          (set! factorial (* factorial (+ 1 i]
+        factorial]
+(console.log ($scope.fact 4))
+(define (fact2 x)
+  (do ((n 2 (+ 1 n)) (result 1))
+      ((< x n) result)
+      (set! result (* result n))))
+(console.log ($scope.fact2 4))
+(console.log (&& (< 2 4) (< 3 4]
+(console.log (&& (< 2 4) (> 3 4]
+  (try (throw 123)
+  (catch ex (console.log ex]
+(defun add3 (a b c) (+ a b c))
+`;
+
+var jsCode = await async_transformCode(lispCode, "transformed.js");
+await system.async_run(["ls", "-lh", "./transformed.js"]);

@@ -23,7 +23,10 @@ export async function async_transformCode(lispCode, _pathToLispCode) {
   export default function(\$scope) {
     const $_scope_$ = lisp($scope);
     $_scope_$.evalJS(\`${
-    rawJS.replace(/[$][{]/g, "\\${").replace(/`/g, "\\`")
+    rawJS
+      .replace(/\\/g, "\\\\")
+      .replace(/[$][{]/g, "\\${")
+      .replace(/`/g, "\\`")
   }\`);
     return $_scope_$;
   }`;
@@ -97,7 +100,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.307.75218";
+  return "npm:open-lisp: version 2026.307.81830";
 }
 
 export function versionNumber() {
