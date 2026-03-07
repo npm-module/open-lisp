@@ -527,7 +527,7 @@ export function lisp1($scope, $system) {
     }
     const code = compile_ast(ast);
     if (debug) {
-      console.log("[JAVASCRIPT]\n" + jsBeautify(code) + "\n[/JAVASCRIPT]");
+      console.log("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
     }
     return code;
   };
@@ -545,7 +545,7 @@ export function lisp1($scope, $system) {
       }
       const code = compile_ast(ast);
       if (debug) {
-        console.log("[JAVASCRIPT]\n" + jsBeautify(code) + "\n[/JAVASCRIPT]");
+        console.log("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
       }
       result += code + ";\n";
     }
@@ -570,7 +570,7 @@ export function lisp1($scope, $system) {
         }
         text = compile_ast(ast);
         if (debug) {
-          console.log("[JAVASCRIPT]\n" + jsBeautify(text) + "\n[/JAVASCRIPT]");
+          console.log("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
         }
         const val = eval(text);
         last = val;
@@ -612,7 +612,7 @@ export function lisp1($scope, $system) {
           console.log(" [AST] " + JSON.stringify(ast));
         }
         if (!debug) {
-          console.log("[JAVASCRIPT]\n" + jsBeautify(text) + "\n[/JAVASCRIPT]");
+          console.log("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
         }
         console.log("[EXCEPTION]");
         if (e.stack) {
