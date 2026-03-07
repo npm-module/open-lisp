@@ -7,8 +7,7 @@ function tokenize(str) {
     if (token[0] === ";") continue;
     if (token.startsWith("#!")) continue;
     if (token.startsWith("#lang ")) continue;
-    if (token.startsWith("#|") && !token.startsWith("#|@")) continue;
-    if (token.startsWith("#")) continue;
+    if (!token.startsWith("#|@") && token.startsWith("#")) continue;
     if (isFinite(token)) token = parseFloat(token, 10);
     result.push(token);
   }
