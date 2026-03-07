@@ -100,10 +100,7 @@ function read_sexp(code, exp) {
         token = token.trim();
         return ["@", token];
       }
-      if (token[0] === ":") return token;
-      if (token[0] === "&") return token;
-      const ids = token[0] === "." ? [token] : token.split(".");
-      return ["#", ...ids];
+      return undefined;
     }
     case "$@": // template literal string
       token = token.replaceAll("\r\n", "\n");
@@ -112,7 +109,7 @@ function read_sexp(code, exp) {
       return ["$@", token];
     case ":": {
       token = token.substring(1);
-      return token;
+      return ["@", token];
     }
     default: {
       if (!token.match(/^[_a-zA-Z][._a-zA-Z0-9]*$/)) {

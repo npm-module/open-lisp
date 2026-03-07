@@ -15,6 +15,15 @@ await system.async_run(["bash", cwd + "/z.sh"]);
 
 const glob = lisp();
 glob.run(`
+  (console.log :true)
+  (console.log :false)
+  (console.log "Hello, World!")
+  (console.log 123)
+  (console.log (+ 11 22))
+  (console.log (list 1 2 3))
+  (console.log (dict "a" 1 "b" 2 "c" 3))
+  (console.log (dict "a" 1 "b" 2 "c" 3))
+  (console.log (dict "a" 1 "b" (list 2 3) "c" (dict "d" 4)))
 #lang lisp
 # 行コメント(1)
 ##行コメント(2)
