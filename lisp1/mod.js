@@ -32,11 +32,10 @@ export async function async_transformCode(lispCode, _pathToLispCode) {
   }`;
   const beautified = await async_prettier(jscode);
   if (_pathToLispCode) {
-    //console.log(`[open-lisp] Transformed ${_pathToLispCode} to JavaScript:\n${beautified}`);
     saveText(_pathToLispCode, beautified);
     console.log(`<SCRIPT>\n${beautified.trimEnd()}\n</SCRIPT>`);
     console.log(
-      `[open-lisp] Transformed your code and saved to the ${_pathToLispCode}.`,
+      `[open-lisp] Transformed your code and saved to ${_pathToLispCode}.`,
     );
   }
   return beautified;
