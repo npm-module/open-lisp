@@ -1,19 +1,14 @@
 function tokenize(str) {
   const re =
-    /[\s,]*([()\[\]{}'`]|"(?:\\.|[^\\"])*"|[$]?@(?:@@|[^@])*@|;.*|#[!# ].*|#lang[ ]+.*|#[\|][\s\S]+?[\|]#|#[a-z]+|[^\s,()\[\]{}'"`;@]*)/g;
+    /[:][a-z]+|[\s,]*([()\[\]{}'`]|"(?:\\.|[^\\"])*"|[$]?@(?:@@|[^@])*@|;.*|#[!# ].*|#lang[ ]+.*|#[\|][\s\S]+?[\|]#|#.*|[^\s,()\[\]{}'"`;@]*)/g;
   const result = [];
   let token;
   while ((token = re.exec(str)[1]) !== "") {
     if (token[0] === ";") continue;
     if (token.startsWith("#!")) continue;
-    if (token.startsWith("##")) continue;
-    if (token.startsWith("# ")) continue;
     if (token.startsWith("#lang ")) continue;
     if (token.startsWith("#|") && !token.startsWith("#|@")) continue;
-    if (
-      !token.startsWith("#@") && !token.startsWith("#|") &&
-      token.startsWith("#")
-    ) token = token.substring(1);
+    if (token.startsWith("#")) continue;
     if (isFinite(token)) token = parseFloat(token, 10);
     result.push(token);
   }
@@ -115,6 +110,10 @@ function read_sexp(code, exp) {
       token = token.replace(/(^[$]@|@$)/g, "");
       token = token.replace(/(@@)/g, "@");
       return ["$@", token];
+    case ":": {
+      token = token.substring(1);
+      return token;
+    }
     default: {
       if (!token.match(/^[_a-zA-Z][._a-zA-Z0-9]*$/)) {
         return ["#", token];

@@ -7,11 +7,11 @@ console.log(cwd);
 const home = Deno.env.get("HOME");
 console.log(home);
 
-await system.run(["bash", "-c", "ls -l"]);
-await system.run(["scoop", "install", "yt-dlp"]);
-await system.run(["scoop", "uninstall", "yt-dlp"]);
-await system.run(["scoop", "install", "yt-dlp"]);
-await system.run(["bash", cwd + "/z.sh"]);
+await system.async_run(["bash", "-c", "ls -l"]);
+await system.async_run(["scoop", "install", "yt-dlp"]);
+await system.async_run(["scoop", "uninstall", "yt-dlp"]);
+await system.async_run(["scoop", "install", "yt-dlp"]);
+await system.async_run(["bash", cwd + "/z.sh"]);
 
 const glob = lisp();
 glob.run(`
@@ -22,7 +22,9 @@ glob.run(`
 #|
 xyz();
 |#
+(console.log :true)
 #|@
+console.log(true);
 console.log("XXX");
 var cwd = $system.cwd();
 console.log(cwd);
@@ -60,6 +62,7 @@ def")
   (console.log $scope.x]
 
 ;(Deno.exit 0)
+#(Deno.exit 0)
 [dotimes (i 3) (console.log i]
 [dotimes (i 3) (dotimes (j 2) (console.log (list i j]
 (define x 11)
