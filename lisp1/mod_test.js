@@ -34,10 +34,10 @@ Deno.test("test#03", async () => {
     scope.run(
       `
 #|@
-globalThis.x%%y%%z = 1%%2%%3;
+globalThis.x%%y%%z <%equal%> 1%%2%%3;
 |#
 
-(defun add2 (a b) (+ a b xyz))
+(defun add2 (a b) (<%plus%> a b xyz))
 `);
     const answer = add2(11, 22);
     console.log(`answer=${answer}`);

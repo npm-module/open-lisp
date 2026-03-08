@@ -1,6 +1,6 @@
 import {
     lisp
-} from "npm:open-lisp@2026.308.152212";
+} from "npm:open-lisp@2026.309.4703";
 
 function transformed($scope) {
     const $_scope_$ = lisp($scope);
