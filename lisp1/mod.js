@@ -18,7 +18,7 @@ export function lisp($scope, $system) {
 //   return formatted;
 // }
 
-export async function async_transformCode(lispCode, _pathToLispCode) {
+export function transformCode(lispCode, _pathToLispCode) {
   const lisp = lisp1({}, system);
   const rawJS = lisp.compile(lispCode).trim();
   const jscode = `
@@ -38,7 +38,7 @@ export async function async_transformCode(lispCode, _pathToLispCode) {
     transformed(globalThis);
   }
 `;
-  const beautified = await async_prettier(jscode);
+  const beautified = jsBeautify(jscode);
   if (_pathToLispCode) {
     saveText(_pathToLispCode, beautified);
     console.error(`<SCRIPT>\n${beautified.trimEnd()}\n</SCRIPT>`);
@@ -107,7 +107,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.308.130743";
+  return "npm:open-lisp: version 2026.308.152212";
 }
 
 export function versionNumber() {

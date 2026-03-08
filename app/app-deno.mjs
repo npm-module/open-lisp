@@ -1,5 +1,5 @@
 #! /usr/bin/env -S deno -A
-import { lisp, system as sys, async_prettier } from "../npm-module/esm/mod.js";
+import { lisp, system as sys } from "../npm-module/esm/mod.js";
 
 console.log(sys.version());
 console.log(sys.versionNumber());
@@ -21,9 +21,3 @@ scope2.run(`
 (console.log ($system.args))
 (console.log ($scope.add2 111 222))
 `);
-
-var js = `
-function add2 (a,b){return a+b}
-`;
-
-console.log(await async_prettier(js));
