@@ -1,22 +1,22 @@
 import { existsSync } from "@std/fs";
-import prettier from "npm:prettier@3.8.1";
+import jsBeautify from "npm:js-beautify@1.15.4";
 import { lisp1 } from "./src/lisp1.mjs";
 
 export function lisp($scope, $system) {
   if (typeof $system === "undefined") {
     $system = system;
   }
-  return lisp1($scope, $system);
+  return lisp1($scope, $system, jsBeautify);
 }
 
-export async function async_prettier(code) {
-  const formatted = await prettier.format(code, {
-    parser: "babel",
-    semi: true,
-    singleQuote: false,
-  });
-  return formatted;
-}
+// export async function async_prettier(code) {
+//   const formatted = await prettier.format(code, {
+//     parser: "babel",
+//     semi: true,
+//     singleQuote: false,
+//   });
+//   return formatted;
+// }
 
 export async function async_transformCode(lispCode, _pathToLispCode) {
   const lisp = lisp1({}, system);

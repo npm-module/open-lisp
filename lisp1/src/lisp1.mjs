@@ -4,7 +4,7 @@ import {
   oml2ast,
 } from "./oml2ast.mjs";
 import { OMLCommon } from "./omlcommon.mjs";
-import jsBeautify from "npm:js-beautify@1.15.4";
+//import jsBeautify from "npm:js-beautify@1.15.4";
 
 const common = new OMLCommon();
 
@@ -82,6 +82,7 @@ function compile_ast(ast) {
   }
   if (common.is_script(ast)) {
     let script = ast[1];
+    script = script.replace(/::/g, ";");
     script = script.replace(/<string>/g, "`");
     script = script.replace(/<[/]string>/g, "`");
     script = script.replace(/({{)/g, "${");
@@ -516,8 +517,13 @@ function compile_do(ast) {
 }
 
 // deno-lint-ignore no-unused-vars
-export function lisp1($scope, $system) {
+export function lisp1($scope, $system, $jsBeautify) {
   if (!$scope) $scope = {};
+  if (!$jsBeautify) {
+    $jsBeautify = function (code) {
+      return code;
+    };
+  }
   $scope.evalJS = (code) => {
     return eval(code);
   };
@@ -527,7 +533,7 @@ export function lisp1($scope, $system) {
     }
     const code = compile_ast(ast);
     if (debug) {
-      console.error("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
+      console.error("<SCRIPT>\n" + $jsBeautify(code) + "\n</SCRIPT>");
     }
     return code;
   };
@@ -545,7 +551,7 @@ export function lisp1($scope, $system) {
       }
       const code = compile_ast(ast);
       if (debug) {
-        console.error("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
+        console.error("<SCRIPT>\n" + $jsBeautify(code) + "\n</SCRIPT>");
       }
       result += code + ";\n";
     }
@@ -570,7 +576,7 @@ export function lisp1($scope, $system) {
         }
         text = compile_ast(ast);
         if (debug) {
-          console.error("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
+          console.error("<SCRIPT>\n" + $jsBeautify(text) + "\n</SCRIPT>");
         }
         const val = eval(text);
         last = val;
@@ -612,7 +618,7 @@ export function lisp1($scope, $system) {
           console.error(" [AST] " + JSON.stringify(ast));
         }
         if (!debug) {
-          console.error("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
+          console.error("<SCRIPT>\n" + $jsBeautify(text) + "\n</SCRIPT>");
         }
         console.error("[EXCEPTION]");
         if (e.stack) {
