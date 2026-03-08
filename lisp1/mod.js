@@ -3,7 +3,7 @@ import prettier from "npm:prettier@3.8.1";
 import { lisp1 } from "./src/lisp1.mjs";
 
 export function lisp($scope, $system) {
-  if (typeof $system === 'undefined') {
+  if (typeof $system === "undefined") {
     $system = system;
   }
   return lisp1($scope, $system);
@@ -23,7 +23,7 @@ export async function async_transformCode(lispCode, _pathToLispCode) {
   const rawJS = lisp.compile(lispCode).trim();
   const jscode = `
   import { lisp } from "npm:open-lisp@${versionNumber()}";
-  export default function(\$scope) {
+  function transformed(\$scope) {
     const $_scope_$ = lisp($scope);
     $_scope_$.evalJS(\`${
     rawJS
@@ -32,7 +32,12 @@ export async function async_transformCode(lispCode, _pathToLispCode) {
       .replace(/`/g, "\\`")
   }\`);
     return $_scope_$;
-  }`;
+  }
+  export default transformed;
+  if (import.meta.main) {
+    transformed(globalThis);
+  }
+`;
   const beautified = await async_prettier(jscode);
   if (_pathToLispCode) {
     saveText(_pathToLispCode, beautified);
@@ -102,7 +107,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.307.183447";
+  return "npm:open-lisp: version 2026.308.125244";
 }
 
 export function versionNumber() {

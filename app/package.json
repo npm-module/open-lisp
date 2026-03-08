@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "open-lisp": "file:../npm-module"
+    "js-beautify": "1.15.4",
+    "open-lisp": "file:../npm-module",
+    "prettier": "3.8.1"
   }
 }

@@ -1,5 +1,5 @@
 #! /usr/bin/env -S deno -A
-import transformed from "./transformed.js";
+import transformed from "./transformed.mjs";
 
 var scope=transformed(globalThis);
 console.log(add3(100, 200, 300));
