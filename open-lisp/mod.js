@@ -99,7 +99,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.310.80824";
+  return "npm:open-lisp: version 2026.310.80932";
 }
 
 export function versionNumber() {

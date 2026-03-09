@@ -1,4 +1,4 @@
-import { system as $system } from "npm:open-lisp@2026.310.80824";
+import { system as $system } from "npm:open-lisp@2026.310.80932";
 function transformed($scope) {
   if (!$scope) $scope = {};
   console.log(123);
