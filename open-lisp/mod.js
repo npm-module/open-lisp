@@ -1,6 +1,13 @@
 import { existsSync } from "@std/fs";
 import jsBeautify from "npm:js-beautify@1.15.4";
 import { lisp1 } from "./src/lisp1.mjs";
+//import * as _dummy from "./https_cdn.jsdelivr.net_npm_@babel-standalone@7.28.6_babel.js";
+
+function _decodeBase64(encoded) {
+  const decodedText = decodeURIComponent(escape(atob(encodedText)));
+  console.log(decodedText);
+  return decodedText;
+}
 
 export function lisp($scope, $system) {
   if (typeof $system === "undefined") {
@@ -9,29 +16,15 @@ export function lisp($scope, $system) {
   return lisp1($scope, $system, jsBeautify);
 }
 
-// export async function async_prettier(code) {
-//   const formatted = await prettier.format(code, {
-//     parser: "babel",
-//     semi: true,
-//     singleQuote: false,
-//   });
-//   return formatted;
-// }
-
 export function transformCode(lispCode, _pathToLispCode) {
   const lisp = lisp1({}, system);
   const rawJS = lisp.compile(lispCode).trim();
   const jscode = `
-  import { lisp } from "npm:open-lisp@${versionNumber()}";
+  import { system as \$system } from "npm:open-lisp@${versionNumber()}";
   function transformed(\$scope) {
-    const $_scope_$ = lisp($scope);
-    $_scope_$.evalJS(\`${
-    rawJS
-      .replace(/\\/g, "\\\\")
-      .replace(/[$][{]/g, "\\${")
-      .replace(/`/g, "\\`")
-  }\`);
-    return $_scope_$;
+    if (!\$scope) \$scope = {};
+    ${rawJS}
+    return \$scope;
   }
   export default transformed;
   if (import.meta.main) {
@@ -107,7 +100,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.309.15122";
+  return "npm:open-lisp: version 2026.309.161856";
 }
 
 export function versionNumber() {
