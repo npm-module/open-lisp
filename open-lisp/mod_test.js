@@ -34,7 +34,7 @@ Deno.test("test#03", async () => {
     scope.run(
       `
 #|@
-globalThis.x%%y%%z <%equal%> 1%%2%%3;
+globalThis.xyz <%equal%> 123;
 |#
 
 (defun add2 (a b) (<%plus%> a b xyz))
