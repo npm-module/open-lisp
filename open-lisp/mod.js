@@ -1,8 +1,6 @@
 import { existsSync } from "@std/fs";
-//import jsBeautify from "npm:js-beautify@1.15.4";
 import { lisp1 } from "./src/lisp1.mjs";
-//import * as _dummy from "./https_cdn.jsdelivr.net_npm_@babel-standalone@7.28.6_babel.js";
-import { beautifyCode } from "./src/babel-transform.mjs";
+import { beautifyCode } from "./babel-transform.mjs";
 
 function _decodeBase64(encoded) {
   const decodedText = decodeURIComponent(escape(atob(encodedText)));
@@ -14,7 +12,7 @@ export function lisp($scope, $system) {
   if (typeof $system === "undefined") {
     $system = system;
   }
-  return lisp1($scope, $system, undefined /*jsBeautify*/);
+  return lisp1($scope, $system, beautifyCode);
 }
 
 export function transformCode(lispCode, _pathToLispCode) {
@@ -101,7 +99,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.309.173144";
+  return "npm:open-lisp: version 2026.309.192511";
 }
 
 export function versionNumber() {
