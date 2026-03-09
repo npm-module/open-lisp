@@ -1,18 +1,18 @@
 import { existsSync } from "@std/fs";
 import { lisp1 } from "./src/lisp1.mjs";
-import { beautifyCode } from "./babel-transform.mjs";
+import { beautifyCode } from "./src/babel-transform.mjs";
 
-function _decodeBase64(encoded) {
-  const decodedText = decodeURIComponent(escape(atob(encodedText)));
-  console.log(decodedText);
-  return decodedText;
-}
+// function _decodeBase64(encoded) {
+//   const decodedText = decodeURIComponent(escape(atob(encodedText)));
+//   console.log(decodedText);
+//   return decodedText;
+// }
 
 export function lisp($scope, $system) {
   if (typeof $system === "undefined") {
     $system = system;
   }
-  return lisp1($scope, $system, beautifyCode);
+  return lisp1($scope, $system, undefined /*beautifyCode*/);
 }
 
 export function transformCode(lispCode, _pathToLispCode) {
@@ -99,7 +99,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.310.61630";
+  return "npm:open-lisp: version 2026.310.80824";
 }
 
 export function versionNumber() {
@@ -171,11 +171,7 @@ export async function async_run(v, ignoreErrors) {
   return result;
 }
 
-export async function async_runWithOutput(
-  v,
-  ignoreErrors,
-  encoding,
-) {
+export async function async_runWithOutput(v, ignoreErrors, encoding) {
   if (encoding == null) encoding = "utf-8";
   // deno-lint-ignore no-deprecated-deno-api
   const p = Deno.run({
