@@ -1,23 +1,17 @@
 import { existsSync } from "@std/fs";
-import { lisp1 } from "./src/lisp1.mjs";
-import { beautifyCode } from "./src/babel-transform.mjs";
-
-// function _decodeBase64(encoded) {
-//   const decodedText = decodeURIComponent(escape(atob(encodedText)));
-//   console.log(decodedText);
-//   return decodedText;
-// }
+import { lisp as _lisp, beautifyCode } from "./lib/xp-lisp.esm.js";
+// import { beautifyCode } from "./src/babel-transform.mjs";
 
 export function lisp($scope, $system) {
   if (typeof $system === "undefined") {
     $system = system;
   }
-  return lisp1($scope, $system, undefined /*beautifyCode*/);
+  return _lisp($scope, $system, undefined /*beautifyCode*/);
 }
 
 export function transformCode(lispCode, _pathToLispCode) {
-  const lisp = lisp1({}, system);
-  const rawJS = lisp.compile(lispCode).trim();
+  const scope = _lisp({}/*, system*/);
+  const rawJS = scope.compile(lispCode).trim();
   const jscode = `
   import { system as \$system } from "npm:open-lisp@${versionNumber()}";
   function transformed(\$scope) {
@@ -99,7 +93,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.310.81007";
+  return "npm:open-lisp: version 2026.312.12028";
 }
 
 export function versionNumber() {
